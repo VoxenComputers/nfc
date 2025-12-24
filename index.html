@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <style>
+        body { margin: 0; background: black; overflow: hidden; height: 100vh; width: 100vw; }
+        video {
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover; /* Ensures the video fills the screen without bars */
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+    <video autoplay muted loop playsinline id="prankVideo">
+        <source src="rickroll.mp4" type="video/mp4">
+    </video>
+
+    <script>
+        // Emergency play: if the browser tries to pause the video, force it back on
+        const v = document.getElementById('prankVideo');
+        v.play(); 
+        
+        // Anti-pause listener
+        document.body.addEventListener('touchstart', function() {
+            v.play();
+        });
+    </script>
+</body>
+</html>
