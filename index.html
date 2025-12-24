@@ -4,28 +4,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <style>
         body { margin: 0; background: black; overflow: hidden; height: 100vh; width: 100vw; }
-        video {
-            width: 100vw;
-            height: 100vh;
-            object-fit: cover; /* Ensures the video fills the screen without bars */
-            position: fixed;
-            top: 0;
-            left: 0;
+        video { width: 100vw; height: 100vh; object-fit: cover; position: fixed; top: 0; left: 0; }
+        #unmute-hint { 
+            position: fixed; bottom: 20px; width: 100%; text-align: center;
+            color: white; font-family: sans-serif; z-index: 10; opacity: 0.7;
         }
     </style>
 </head>
 <body>
-    <video autoplay muted loop playsinline id="prankVideo">
+
+    <div id="unmute-hint">TAP TO REBOOT SYSTEM</div>
+
+    <video id="prank" autoplay muted loop playsinline>
         <source src="rickroll.mp4" type="video/mp4">
     </video>
 
     <script>
-        // Emergency play: if the browser tries to pause the video, force it back on
-        const v = document.getElementById('prankVideo');
-        v.play(); 
-        
-        // Anti-pause listener
+        const v = document.getElementById('prank');
+
+        // The moment they touch the screen, the sound "unlocks"
+        document.body.addEventListener('click', function() {
+            v.muted = false; // Unmutes the video
+            v.volume = 1.0;  // Sets internal web volume to max
+            document.getElementById('unmute-hint').style.display = 'none';
+        });
+
+        // For mobile devices, "touchstart" is often faster
         document.body.addEventListener('touchstart', function() {
+            v.muted = false;
             v.play();
         });
     </script>
